@@ -1,14 +1,10 @@
 module Main where
 
-import Lexer.Lexer
-import Parser.Parser
-import Parser.AST
-import Eval
+import Regex
 
 main :: IO ()
 main = do
-    let tokens = alexScanTokens "a*ba*aa"
-    print tokens
-    let ast = parse tokens
-    print ast
-    print $ runEval ast "aaabaab"
+    print $ test "test" "test"
+    print $ test "(test)+" "testtesttestqq"
+    print $ test "a*b+q|ws" "bws"
+    print $ test "a*b+q|ws" "bws"

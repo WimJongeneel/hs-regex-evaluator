@@ -1,11 +1,25 @@
 # Haskell Regex Evaluator
 
+```hs
+module Main where
+
+import Regex
+
+main :: IO ()
+main = do
+    print $ test "test" "test"
+    print $ test "(test)+" "testtesttestqq"
+    print $ test "a*b+q|ws" "aaabws"
+    print $ test "a*b+q|ws" "bws"
+```
+
 ## Supported features:
 
-* matching of exact chars
-* an or-operator with `|`
-* the `*` operator on every nested regex
-* the `+` operator on every nested regex
+* matching of single chars
+* concatenated regexes by appending them together 
+* the `|` between any two regexes
+* the `*` operator on any nested regex
+* the `+` operator on any nested regex
 * nested regexes with `( )` to apply the operators to complex regexes
 
 ## Implementation details

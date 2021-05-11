@@ -1,8 +1,10 @@
-module Eval where
+module Regex where
 
 import Control.Monad.State
 import Data.Set (Set, toList, singleton, union, fromList)
 
+import Lexer.Lexer
+import Parser.Parser
 import Parser.AST
 
 eval :: Regex -> State (Set String) Bool
@@ -49,5 +51,9 @@ eval (RNested n) = eval n
 runEval :: Regex -> String -> (Bool, [String])
 runEval r s = let state = eval r; (pass, remainers) = runState state $ singleton s in (pass, toList remainers)
 
-test :: Regex -> String -> Bool
-test r s = let (p, _) = runEval r s in p
+
+test :: String -> String -> Bool
+test r s = let tokens = alexScanTokens r;
+               ast = parse tokens
+               res = runEval ast s
+        in fst res
