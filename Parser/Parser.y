@@ -18,8 +18,7 @@ pipe      { TPipe }
 char      { TChar $$ }
 optional  { TOptional }
 
-%right pipe
-%right star pipe optional
+%right star plus optional pipe
 
 %%
 

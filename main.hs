@@ -13,3 +13,4 @@ main = do
     print $ test "foo|(ba?r)+" "fobarbr"
     print $ test "(foo)*bar(baz)+" "barbazbaz"
     print $ test "a?+" "aaa"
+    print $ test "a|b|c|d" "aaa"
