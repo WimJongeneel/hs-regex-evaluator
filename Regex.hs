@@ -25,20 +25,17 @@ eval (ROr l r) = do
     let (lp, lr) = let state = eval l in runState state remainers
     let (rp, rr) = let state = eval r in runState state remainers
     put $ case (lp, rp) of
-        (True, True)    -> lr `union` rr
-        (False, False)  -> lr `union` rr
         (True, False)   -> lr
         (False, True)   -> rr
+        _               -> lr `union` rr
     return $ lp || rp
 
 eval (RStar r) = do
     remainers <- get
     let consume = \(rem, res) -> let state = eval r; (pass, rem') = runState state rem
-                                 in if rem == rem' 
-                                    then res 
-                                    else if pass 
-                                         then consume (rem', rem' `union` res) 
-                                         else res
+                                 in if rem /= rem' 
+                                    then consume (rem', rem' `union` res) 
+                                    else res
     put $ consume (remainers, remainers)
     return True
 
@@ -46,11 +43,9 @@ eval (RPlus r) = do
     pass <- eval r
     remainers <- get
     let consume = \(rem, res) -> let state = eval r; (pass, rem') = runState state rem
-                                 in if rem == rem' 
-                                    then res 
-                                    else if pass 
-                                         then consume (rem', rem' `union` res) 
-                                         else res
+                                 in if rem /= rem' 
+                                    then consume (rem', rem' `union` res) 
+                                    else res
     put $ consume (remainers, remainers)
     return pass
 
