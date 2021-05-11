@@ -7,11 +7,13 @@ import Regex
 
 main :: IO ()
 main = do
-    print $ test "test" "test"
-    print $ test "(test)+" "testtesttestqq"
-    print $ test "a*b+q|ws" "aaabws"
-    print $ test "a*b+q|ws" "bws"
+    print $ test "foo" "foo"
+    print $ test "(bar)+" "barbar"
+    print $ test "bar+" "barrrr"
+    print $ test "foo|(bar)+" "foo"
+    print $ test "(foo)*bar(baz)+" "barbazbaz"
 ```
+> all samples result in `True`
 
 ## Supported features:
 
