@@ -6,4 +6,5 @@ data Regex = RChar String
   | RPlus Regex
   | ROr Regex Regex
   | RConcat Regex Regex
+  | ROptional Regex
   deriving (Eq, Show)

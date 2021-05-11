@@ -6,4 +6,5 @@ data Token = TChar String
   | TPipe
   | TLeftParenthesis
   | TRigthParenthesis
+  | TOptional
   deriving (Eq, Show)

@@ -46,14 +46,20 @@ eval (RPlus r) = do
     put $ consume (remainers, remainers)
     return pass
 
+eval (ROptional r) = do 
+    remainers <- get
+    pass <- eval r
+    remainers' <- get
+    put $ if pass then remainers `union` remainers' else remainers
+    return True
+
 eval (RNested n) = eval n
 
-runEval :: Regex -> String -> (Bool, [String])
-runEval r s = let state = eval r; (pass, remainers) = runState state $ singleton s in (pass, toList remainers)
-
+runEval :: String -> String -> (Bool, [String])
+runEval r s = let tokens = alexScanTokens r;
+                  ast = parse tokens
+                  res = runState (eval ast) $ singleton s
+              in (fst res, toList $ snd res)
 
 test :: String -> String -> Bool
-test r s = let tokens = alexScanTokens r;
-               ast = parse tokens
-               res = runEval ast s
-        in fst res
+test r s = fst $ runEval r s

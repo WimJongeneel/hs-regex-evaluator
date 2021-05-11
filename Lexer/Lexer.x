@@ -17,4 +17,5 @@ tokens :-
   "+"                                 { (\_ -> TPlus) }
   "*"                                 { (\_ -> TStar) }
   "|"                                 { (\_ -> TPipe) }
+  "?"                                 { (\_ -> TOptional) }
   $alpha                              { (\s -> TChar $ s) }

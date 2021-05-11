@@ -16,9 +16,10 @@ plus      { TPlus }
 star      { TStar } 
 pipe      { TPipe }
 char      { TChar $$ }
+optional  { TOptional }
 
-%nonassoc char
-%nonassoc pipe
+%right pipe
+%right star pipe optional
 
 %%
 
@@ -29,8 +30,8 @@ Other: char                                                             { RChar 
     | lp Regex rp                                                       { RNested $2 }
     | Regex star                                                        { RStar $1 }
     | Regex plus                                                        { RPlus $1 }
+    | Regex optional                                                    { ROptional $1 }
     | Other pipe Regex                                                  { $1 `ROr` $3 }
-
 {
 happyError :: [Token] -> a
 happyError i = error $ show i

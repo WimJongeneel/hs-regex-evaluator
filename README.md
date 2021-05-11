@@ -20,8 +20,9 @@ main = do
 * matching of single chars
 * concatenated regexes by appending them together 
 * the `|` between any two regexes
-* the `*` operator on any nested regex
-* the `+` operator on any nested regex
+* the `*` operator on any potentially nested regex
+* the `+` operator on any potentially nested regex
+* the `?` operator on any potentially nested regex
 * nested regexes with `( )` to apply the operators to complex regexes
 
 ## Implementation details
